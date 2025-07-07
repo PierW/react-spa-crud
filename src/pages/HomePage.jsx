@@ -8,7 +8,7 @@ const HomePage = () => {
         <>
             <Hero title="Questo non è un titolo di default" />
             <HomeCards />
-            <JobLisings />
+            <JobLisings isHome={true} />
             <ViewAllJobs />
         </>
     );
