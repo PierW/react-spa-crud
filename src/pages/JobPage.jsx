@@ -1,12 +1,14 @@
 import {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams, useNavigate} from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { FaArrowLeft, FaMapPin } from "react-icons/fa";
 
-const JobPage = () => {
+const JobPage = ({emitDeleteJob}) => {
   const {id} = useParams();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -22,6 +24,16 @@ const JobPage = () => {
     };
     fetchJob();
   }, []);
+
+  const deleteJobSubmit = (jobId) => {
+    const confirm = window.confirm('Sei sicuro di voler eliminare questo lavoro?')
+
+    if(!confirm) return;
+
+    emitDeleteJob(jobId);
+
+    navigate('/jobs');
+  }
 
   return (
     <>
@@ -104,7 +116,7 @@ const JobPage = () => {
                     >
                       Edit Job
                     </Link>
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+                    <button onClick={() => deleteJobSubmit(job.id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                       Delete Job
                     </button>
                   </div>

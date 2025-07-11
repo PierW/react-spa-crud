@@ -8,15 +8,32 @@ import AddJobPage from "./pages/AddJobPage";
 
 function App() {
 
-  const saveJob = async (job) => {
-    await fetch('/api/jobs', {
+  // CREATE JOB
+const saveJob = async (job) => {
+  try {
+    const res = await fetch('/api/jobs', {
       method: 'POST',
       headers: {
-        'Content-Type' : 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(job)
     });
-    return;
+    if (!res.ok) throw new Error('Errore nella creazione del job');
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+  // DELETE JOB
+  const deleteJob = async (jobId) => {
+    try {
+      const res = await fetch(`/api/jobs/${jobId}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Errore nell\'eliminazione del job');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const router = createBrowserRouter(
@@ -25,7 +42,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/add-job" element={<AddJobPage addNewJob={saveJob} />} />
-        <Route path="/jobs/:id" element={<JobPage/>} />
+        <Route path="/jobs/:id" element={<JobPage emitDeleteJob={deleteJob}/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     )
