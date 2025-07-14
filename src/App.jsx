@@ -5,6 +5,7 @@ import JobsPage from "./pages/JobsPage";
 import NotFound from "./pages/NotFound";
 import JobPage from "./pages/JobPage";
 import AddJobPage from "./pages/AddJobPage";
+import { toast } from "react-toastify";
 
 function App() {
 
@@ -19,7 +20,9 @@ const saveJob = async (job) => {
       body: JSON.stringify(job)
     });
     if (!res.ok) throw new Error('Errore nella creazione del job');
+    toast.success('Lavoro aggiunto con successo!');
   } catch (error) {
+    toast.error('Errore durante l\'aggiunta del lavoro');
     console.error(error);
   }
 };
@@ -31,7 +34,9 @@ const saveJob = async (job) => {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Errore nell\'eliminazione del job');
+      toast.success('Toast eliminato con successo');
     } catch (error) {
+      toast.error('Errore durante l\'eliminazione del lavoro');
       console.error(error);
     }
   }
