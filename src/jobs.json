@@ -83,6 +83,20 @@
         "contactEmail": "contact@ipsumlorem.com",
         "contactPhone": "555-555-5555"
       }
+    },
+    {
+      "id": "9908",
+      "type": "Part-Time",
+      "title": "cxkkkk",
+      "description": "cxxllll",
+      "salary": "$70K - 80K",
+      "location": "Boston, MAflllll",
+      "company": {
+        "name": "Alpha Elite",
+        "description": "sdfb",
+        "contactEmail": "erre@dsfd.it",
+        "contactPhone": "3243446"
+      }
     }
   ]
 }

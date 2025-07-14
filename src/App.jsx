@@ -2,6 +2,7 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import HomePage from "./pages/HomePage";
 import MainLayout from "./layouts/MainLayout";
 import JobsPage from "./pages/JobsPage";
+import EditJobPage from "./pages/EditJobPage";
 import NotFound from "./pages/NotFound";
 import JobPage from "./pages/JobPage";
 import AddJobPage from "./pages/AddJobPage";
@@ -41,12 +42,31 @@ const saveJob = async (job) => {
     }
   }
 
+  // UPDATE JOB
+  const updateJob = async (job) => {
+    try {
+      const res = await fetch(`/api/jobs/${job.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(job)
+      });
+      if (!res.ok) throw new Error('Errore nella creazione del job');
+      toast.success('Lavoro aggiornato con successo!');
+    } catch (error) {
+      toast.error('Errore durante l\'aggiornamento del lavoro');
+      console.error(error);
+    }
+  };
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout/>}>
         <Route index element={<HomePage />} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/add-job" element={<AddJobPage addNewJob={saveJob} />} />
+        <Route path="/edit-job/:id" element={<EditJobPage emitUpdateJob={updateJob}/>} />
         <Route path="/jobs/:id" element={<JobPage emitDeleteJob={deleteJob}/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
